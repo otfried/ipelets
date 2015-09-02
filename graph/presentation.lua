@@ -22,7 +22,18 @@ STYLESHEET (CHANGING PREFERRED SETTINGS)
  Example style sheet to cascade with presentation.isy is as follows.
 
 ---- content of example.isy ---
-example removed, not possible to upload this file to the ipe-wiki otherwise
+<?xml version="1.0"?>
+<!DOCTYPE ipestyle SYSTEM "ipe.dtd">
+<ipestyle name="mine">
+<color name="tab_header" value="0 0 0.5"/>
+<color name="tab_body" value="0.827"/>
+<color name="box_fill" value="0.827"/>
+<color name="box_border" value="0 0 0"/>
+<pen name="boxborder" value="2.4"/>
+<preamble>
+\usepackage{amsmath}
+</preamble>
+</ipestyle>
 ---- end content of example.isy ---
 
  where:
@@ -90,6 +101,12 @@ local PREFERRED_BOX_MODE="strokedfilled" -- or stroked or filled
 
 local BOX_DIALOG_SIZE={400,140}
 
+-- "spline" is recommended here, as it should work with most
+-- ipe-versions
+local SPLINE_TYPE_NAME="spline"
+-- local SPLINE_TYPE_NAME="oldspline"
+-- local SPLINE_TYPE_NAME="bezier"
+
 -- initialize the Height table
 local function init_spacing(model)
 	local p=model:page()
@@ -122,6 +139,7 @@ local function path(model, shape, props)
 		model.attributes[k]=v
 	end
 	local obj = ipe.Path(model.attributes, shape)
+	-- print(obj)
 	for k,v in pairs(props) do
 		model.attributes[k]=oldvalues[k]
 	end
@@ -159,7 +177,7 @@ local function boxshape_roundTR(v1, v2)
 	return { type="curve", closed=true;
 		 { type="segment"; v1, V(v1.x, v2.y) },
 		 { type="segment"; V(v1.x, v2.y), V(v2.x-c, v2.y) },
-		 { type="bezier"; V(v2.x-c, v2.y), V(v2.x-c/2, v2.y),
+		 { type=SPLINE_TYPE_NAME; V(v2.x-c, v2.y), V(v2.x-c/2, v2.y),
 		 	V(v2.x, v2.y-c/2), V(v2.x, v2.y-c) },
 		 { type="segment"; V(v2.x, v2.y-c), V(v2.x, v1.y) } }
 end
@@ -169,7 +187,7 @@ local function boxshape_roundLL(v1, v2)
 	return { type="curve", closed=true;
 		 { type="segment"; v2, V(v2.x, v1.y) },
 		 { type="segment"; V(v2.x, v1.y), V(v1.x+c, v1.y) },
-		 { type="bezier"; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
+		 { type=SPLINE_TYPE_NAME; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
 		 	V(v1.x, v1.y+c/2), V(v1.x, v1.y+c) },
 		 { type="segment"; V(v1.x, v1.y+c), V(v1.x, v2.y) } }
 end
@@ -178,16 +196,16 @@ end
 local function boxshape_round(v1, v2)
 	return { type="curve", closed=true;
 		 { type="segment"; V(v2.x, v2.y-c), V(v2.x, v1.y+c) }, -- R
-		 { type="bezier"; V(v2.x,v1.y+c), V(v2.x, v1.y+c/2),
+		 { type=SPLINE_TYPE_NAME; V(v2.x,v1.y+c), V(v2.x, v1.y+c/2),
 		 	V(v2.x-c/2,v1.y), V(v2.x-c,v1.y)}, -- BR
 		 { type="segment"; V(v2.x-c, v1.y), V(v1.x+c, v1.y) }, -- B
-		 { type="bezier"; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
+		 { type=SPLINE_TYPE_NAME; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
 		 	V(v1.x, v1.y+c/2), V(v1.x, v1.y+c) }, -- BL
 		 { type="segment"; V(v1.x, v1.y+c), V(v1.x, v2.y-c) }, -- L
-		 { type="bezier"; V(v1.x, v2.y-c), V(v1.x,v2.y-c/2),
+		 { type=SPLINE_TYPE_NAME; V(v1.x, v2.y-c), V(v1.x,v2.y-c/2),
 		 	V(v1.x+c/2, v2.y), V(v1.x+c, v2.y) }, -- TL
 		 { type="segment"; V(v1.x+c, v2.y), V(v2.x-c, v2.y) }, -- T
-		 { type="bezier"; V(v2.x-c, v2.y), V(v2.x-c/2,v2.y),
+		 { type=SPLINE_TYPE_NAME; V(v2.x-c, v2.y), V(v2.x-c/2,v2.y),
 		 	V(v2.x, v2.y-c/2), V(v2.x, v2.y-c) }, -- TR
 		}
 end
@@ -201,19 +219,19 @@ local function boxshape_round_pointer(v1, v2, v3, v4, v5)
 	local v5=v5 or V(v1.x+.5*dx,v2.y)
 	return { type="curve", closed=true;
 		 { type="segment"; V(v2.x, v2.y-c), V(v2.x, v1.y+c) }, -- R
-		 { type="bezier"; V(v2.x,v1.y+c), V(v2.x, v1.y+c/2),
+		 { type=SPLINE_TYPE_NAME; V(v2.x,v1.y+c), V(v2.x, v1.y+c/2),
 		 	V(v2.x-c/2,v1.y), V(v2.x-c,v1.y)}, -- BR
 		 { type="segment"; V(v2.x-c, v1.y), V(v1.x+c, v1.y) }, -- B
-		 { type="bezier"; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
+		 { type=SPLINE_TYPE_NAME; V(v1.x+c, v1.y), V(v1.x+c/2,v1.y),
 		 	V(v1.x, v1.y+c/2), V(v1.x, v1.y+c) }, -- BL
 		 { type="segment"; V(v1.x, v1.y+c), V(v1.x, v2.y-c) }, -- L
-		 { type="bezier"; V(v1.x, v2.y-c), V(v1.x,v2.y-c/2),
+		 { type=SPLINE_TYPE_NAME; V(v1.x, v2.y-c), V(v1.x,v2.y-c/2),
 		 	V(v1.x+c/2, v2.y), V(v1.x+c, v2.y) }, -- TL
 		 { type="segment"; V(v1.x+c, v2.y), v3}, -- T
 		 { type="segment"; v3, v4}, -- P
 		 { type="segment"; v4, v5}, --P
 		 { type="segment"; v5, V(v2.x-c, v2.y)}, -- T
-		 { type="bezier"; V(v2.x-c, v2.y), V(v2.x-c/2,v2.y),
+		 { type=SPLINE_TYPE_NAME; V(v2.x-c, v2.y), V(v2.x-c/2,v2.y),
 		 	V(v2.x, v2.y-c/2), V(v2.x, v2.y-c) }, -- TR
 		}
 end
@@ -489,8 +507,8 @@ local function create_tabbed(model,values, pos, prim)
 	-- header box
 	local shape1 = { boxshape_roundTR(V(x1,y2-h-2*s), V(x2,y2)) }
 	local hb = path(model, shape1,
-		{pathmode='filled', fill=values.hcolor, stroke="white"})
-		hb:set('pathmode', 'filled', "white", values.hcolor)
+			{pathmode='filled', fill=values.hcolor, stroke="white"})
+	hb:set('pathmode', 'filled', "white", values.hcolor)
 
 	-- body box
 	local shape2 = { boxshape_roundLL(V(x1,y1), V(x2,y2-h-2*s)) }
