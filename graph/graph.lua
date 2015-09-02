@@ -86,14 +86,21 @@ _G.EDITTOOL.graph_backup_key = _G.EDITTOOL.key
 
 -- overwriting
 function _G.EDITTOOL:key(code, modifiers, text)
+   -- The parameters of the key() function have changed in version
+   -- 7.1.7.  Thus, we potentially have to remap the parameters.
+   if text == nil then
+      text = code
+   end
    self:graph_backup_key(code, modifiers, text)
    if deactivateGraphMode then return end
 
    -- react if and only if we are currently editing a mark and key ESC
    -- or SPACE is pressed
-   if text ~= "\027" and code ~= 0x20 then return end
-   if not editing then return end
+   -- if text ~= "\027" and code ~= 0x20 then return end
+   if text ~= "\027" and text ~= " " then return end
 
+   if not editing then return end
+   
    editing = false
 
    -- finding new and old position
