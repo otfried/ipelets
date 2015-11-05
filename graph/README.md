@@ -35,7 +35,8 @@ the ipelet (at least if all vertices have the same size).
 
 ## Ipe Version ##
 
-I tested the ipelet with versions 7.0.14 and 7.1.2 of Ipe.
+I tested the ipelet with versions 7.0.14, 7.1.2, 7.1.5, 7.1.7, and
+7.1.8 of Ipe.
 
 ## Presentation Ipelet ##
 
@@ -44,6 +45,10 @@ the presentation ipelet.  I'm using a modified [presentation
 ipelet](presentation.lua).
 
 # Changes #
+
+**26 August 2015**
+	the ipelets (graph and presentation) should now also work with Ipe
+	7.1.7 and Ipe 7.1.8
 
 **8 November 2013**
     new mode that only changes edges that are currently visible; see
