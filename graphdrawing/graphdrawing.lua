@@ -8,7 +8,8 @@ about = [[
 An interface to the TikZ graph drawing library.
 ]]
 
-local pgf_gd_path = "/home/otfried/Devel/tikz/tex/generic/pgf/graphdrawing/lua"
+local pgf_gd_path = "/usr/local/texlive/2015/texmf-dist/tex/generic/pgf/graphdrawing/lua"
+-- local pgf_gd_path = "/home/otfried/Devel/tikz/tex/generic/pgf/graphdrawing/lua"
 
 _G.package.path = pgf_gd_path .. "/?.lua;" .. _G.package.path
 
