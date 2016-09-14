@@ -7,13 +7,14 @@ by Tikz.  See below for installation instructions.
 
 Draw a graph, for instance the following:
 
+![graph1.ipe](screenshots/graph1.tiff "graph1.ipe")
 
 Select all its nodes and vertices, and call the desired layout method
 of the ipelet. (You'll need to read the Tikz manual to understand the
 precise options.)  Here is the result if you choose `spring electrical
 layout`:
 
-
+![automatically layed out graph1.ipe](screenshots/graph1a.tiff "graph1.ipe with spring elecrical layout")
 
 ### What is a graph?
 
