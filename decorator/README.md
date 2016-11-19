@@ -1,3 +1,9 @@
+**Note:** Most of the functionality of this ipelet is built into Ipe
+7.2.5 and higher.  See the provided stylesheet *decorations.isy* for
+examples of how decorations are defined.  The built-in implementation
+has the advantage that the decorations are resized automatically when
+the object being decorated is changed.
+
 With the decorator ipelet, you can decorate other objects (by for
 example surrounding them with a box).  The ipelet is flexible in the
 sense that you can define your own decorator objects.  The following

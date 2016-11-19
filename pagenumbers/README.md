@@ -1,3 +1,9 @@
+**Note:** Most of the functionality of this ipelet is built into Ipe
+7.2.4 and higher.  See the section *Presentation stylesheets* in the
+manual.  Additional features provided by this ipelet are the
+possibility to hide page numbers on some pages and to have pages that
+do not increase the page counter.
+
 This ipelet provides some page numbering features that are not covered
 by the built in page numbering mechanism.  To install the ipelet,
 download

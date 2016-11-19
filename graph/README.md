@@ -1,3 +1,6 @@
+**Note:** The ability to move graph vertices has been built into Ipe
+  7.2.6.  It also works for vertices that are text objects or groups.
+
 This ipelet helps when drawing graphs.  To install the ipelet,
 download [graph.lua](graph.lua) and copy it to `~/.ipe/ipelets/` (or
 to some other directory for ipelets).
